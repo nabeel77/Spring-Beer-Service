@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .customerName(customer.getCustomerName())
                 .version(customer.getVersion())
                 .build();
-        customerMap.put(customer.getId(), savedCustomer);
+        customerMap.put(savedCustomer.getId(), savedCustomer);
         return savedCustomer;
     }
 }
