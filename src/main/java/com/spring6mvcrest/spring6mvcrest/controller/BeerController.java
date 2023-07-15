@@ -4,6 +4,7 @@ import com.spring6mvcrest.spring6mvcrest.model.Beer;
 import com.spring6mvcrest.spring6mvcrest.service.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,13 @@ import java.util.UUID;
 public class BeerController {
 
     private final BeerService beerService;
+
+    @PutMapping("{beerId}")
+    public ResponseEntity updatedById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+
+        beerService.updateBeerById(beerId, beer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
     @PostMapping
     //@RequestMapping(method = RequestMethod.POST)
