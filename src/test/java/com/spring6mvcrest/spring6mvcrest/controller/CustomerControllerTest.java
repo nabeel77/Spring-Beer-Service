@@ -1,5 +1,7 @@
 package com.spring6mvcrest.spring6mvcrest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring6mvcrest.spring6mvcrest.model.Customer;
 import com.spring6mvcrest.spring6mvcrest.service.CustomerService;
 import com.spring6mvcrest.spring6mvcrest.service.CustomerServiceImpl;
@@ -21,10 +23,14 @@ public class CustomerControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @MockBean  // provide mock of the controller bean service. Will add the customer service into the spring context
     CustomerService customerService;
 
     CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
+
     @Test
     void testListCustomers() throws Exception {
         given(customerService.listCustomer()).willReturn(customerServiceImpl.listCustomer());
