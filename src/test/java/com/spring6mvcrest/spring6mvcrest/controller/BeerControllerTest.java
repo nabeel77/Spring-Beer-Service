@@ -50,7 +50,7 @@ class BeerControllerTest {
         beer.setVersion(0);
         beer.setId(null);
         given(beerService.saveNewBeer(any(Beer.class))).willReturn(beerServiceImpl.listBeers().get(1));
-        mockMvc. perform(post("/api/v1/beer")
+        mockMvc.perform(post("/api/v1/beer")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(beer)))
