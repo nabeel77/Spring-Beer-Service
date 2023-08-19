@@ -52,7 +52,7 @@ class BeerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isNoContent());
-        // objectMapper.writeValueAsString(beer) - conver beer POJO into JSON
+        // objectMapper.writeValueAsString(beer) - convert beer POJO into JSON
         verify(beerService).updateBeerById(any(UUID.class), any(Beer.class));
     }
 
