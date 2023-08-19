@@ -38,7 +38,7 @@ public class CustomerControllerTest {
     @Test
     void testUpdateBeer() throws Exception {
         Customer customer = customerServiceImpl.listCustomer().get(0);
-        mockMvc.perform(put("/api/v1/customer/" + customer.getId())
+        mockMvc.perform(put(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(customer)))
@@ -53,7 +53,7 @@ public class CustomerControllerTest {
         customer.setVersion(null);
         customer.setId(null);
         given(customerService.saveNewCustomer(any(Customer.class))).willReturn(customerServiceImpl.listCustomer().get(1));
-        mockMvc.perform(post("/api/v1/customer")
+        mockMvc.perform(post(CustomerController.CUSTOMER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(customer)))
@@ -65,7 +65,7 @@ public class CustomerControllerTest {
     void testListCustomers() throws Exception {
         given(customerService.listCustomer()).willReturn(customerServiceImpl.listCustomer());
 
-        mockMvc.perform(get("/api/v1/customer").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CustomerController.CUSTOMER_PATH).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()", is(3)));
@@ -75,7 +75,7 @@ public class CustomerControllerTest {
     void testGetCustomerById() throws Exception {
         Customer testCustomer = customerServiceImpl.listCustomer().get(0);
         given(customerService.getCustomerById(testCustomer.getId())).willReturn(testCustomer);
-        mockMvc.perform(get("/api/v1/customer/"+testCustomer.getId()).accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CustomerController.CUSTOMER_PATH + "/" + testCustomer.getId()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(testCustomer.getId().toString())))
