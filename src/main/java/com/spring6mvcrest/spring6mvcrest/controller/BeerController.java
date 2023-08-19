@@ -59,6 +59,12 @@ public class BeerController {
         return beerService.listBeers();
     }
 
+    // Any not found exception thrown in this class will be handled by following method
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity handleNotFoundException() {
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping(value = BEER_PATH_ID)
     public Beer getBeerById(@PathVariable("beerId") UUID beerId) {
         log.debug("Get beer by id - in controller");
