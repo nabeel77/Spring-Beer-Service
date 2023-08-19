@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 // Adding @ControllerAdvice on this class, this class will be recognized globally as exception handler class
-@ControllerAdvice
+//@ControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(NotFoundException.class)
+    //@ExceptionHandler(NotFoundException.class)
     public ResponseEntity handleNotFoundException() {
         return ResponseEntity.notFound().build();
     }
