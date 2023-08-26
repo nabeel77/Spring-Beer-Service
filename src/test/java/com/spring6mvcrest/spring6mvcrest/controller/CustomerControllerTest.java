@@ -1,8 +1,7 @@
 package com.spring6mvcrest.spring6mvcrest.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring6mvcrest.spring6mvcrest.model.Customer;
+import com.spring6mvcrest.spring6mvcrest.model.CustomerDTO;
 import com.spring6mvcrest.spring6mvcrest.service.CustomerService;
 import com.spring6mvcrest.spring6mvcrest.service.CustomerServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.core.Is.is;
 
@@ -45,22 +43,22 @@ public class CustomerControllerTest {
 
     @Test
     void testUpdateBeer() throws Exception {
-        Customer customer = customerServiceImpl.listCustomer().get(0);
+        CustomerDTO customer = customerServiceImpl.listCustomer().get(0);
         mockMvc.perform(put(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).updatedCustomerById(any(UUID.class), any(Customer.class));
+        verify(customerService).updatedCustomerById(any(UUID.class), any(CustomerDTO.class));
     }
 
     @Test
     void createNewCustomer() throws Exception {
-        Customer customer = customerServiceImpl.listCustomer().get(0);
+        CustomerDTO customer = customerServiceImpl.listCustomer().get(0);
         customer.setVersion(null);
         customer.setId(null);
-        given(customerService.saveNewCustomer(any(Customer.class))).willReturn(customerServiceImpl.listCustomer().get(1));
+        given(customerService.saveNewCustomer(any(CustomerDTO.class))).willReturn(customerServiceImpl.listCustomer().get(1));
         mockMvc.perform(post(CustomerController.CUSTOMER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +79,7 @@ public class CustomerControllerTest {
 
     @Test
     void testGetCustomerById() throws Exception {
-        Customer testCustomer = customerServiceImpl.listCustomer().get(0);
+        CustomerDTO testCustomer = customerServiceImpl.listCustomer().get(0);
         given(customerService.getCustomerById(testCustomer.getId())).willReturn(Optional.of(testCustomer));
         mockMvc.perform(get(CustomerController.CUSTOMER_PATH + "/" + testCustomer.getId()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
