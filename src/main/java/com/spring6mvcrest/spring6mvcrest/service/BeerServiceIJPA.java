@@ -1,5 +1,6 @@
 package com.spring6mvcrest.spring6mvcrest.service;
 
+import com.spring6mvcrest.spring6mvcrest.entities.Beer;
 import com.spring6mvcrest.spring6mvcrest.mappers.BeerMapper;
 import com.spring6mvcrest.spring6mvcrest.model.BeerDTO;
 import com.spring6mvcrest.spring6mvcrest.repositories.BeerRepository;
@@ -30,17 +31,23 @@ public class BeerServiceIJPA implements BeerService {
 
     @Override
     public Optional<BeerDTO> getBeerById(UUID id) {
-        return Optional.empty();
+        return Optional.ofNullable(beerMapper.beerToBeerDTO(beerRepository.findById(id).orElse(null)));
     }
 
     @Override
     public BeerDTO saveNewBeer(BeerDTO beer) {
-        return null;
+        return beerMapper.beerToBeerDTO(beerRepository.save(beerMapper.beerDtoToBeer(beer)));
     }
 
     @Override
     public void updateBeerById(UUID beerId, BeerDTO beer) {
-
+        beerRepository.findById(beerId).ifPresent(foundBeer -> {
+            foundBeer.setBeerName(beer.getBeerName());
+            foundBeer.setBeerStyle(beer.getBeerStyle());
+            foundBeer.setUpc(beer.getUpc());
+            foundBeer.setPrice(beer.getPrice());
+            beerRepository.save(foundBeer);
+        });
     }
 
     @Override
