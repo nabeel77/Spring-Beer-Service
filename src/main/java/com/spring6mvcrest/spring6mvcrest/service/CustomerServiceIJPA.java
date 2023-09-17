@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class CustomerServiceImplJPA implements CustomerService {
+public class CustomerServiceIJPA implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;

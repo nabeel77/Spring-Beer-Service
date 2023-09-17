@@ -10,18 +10,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
 @RequiredArgsConstructor
-public class BeerServiceImplJPA implements BeerService {
+public class BeerServiceIJPA implements BeerService {
 
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
 
     @Override
     public List<BeerDTO> listBeers() {
-        return null;
+        return beerRepository.findAll()
+                .stream()
+                .map(beerMapper::beerToBeerDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
